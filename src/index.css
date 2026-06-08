@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+  @theme is Tailwind v4's equivalent of tailwind.config theme.extend.
+  The TS files in src/tokens/ are the source of truth — values here mirror them exactly.
+  Naming: --color-X  →  bg-X / text-X / border-X
+          --text-X   →  text-X (font-size utility)
+          --radius-X →  rounded-X
+*/
+
+@theme {
+  /* ── Brand ── */
+  --color-brand-teal: #0E3A3A;
+  --color-brand-teal-hover: #11504A;
+  --color-mint: #2DD4A7;
+  --color-mint-soft: #E6F7F1;
+
+  /* ── Semantic: success / stable ── */
+  --color-success: #0F6E56;
+  --color-success-bg: #E1F5EE;
+  --color-success-border: #1D9E75;
+
+  /* ── Semantic: warning / fragile / cost ── */
+  --color-warning: #854F0B;
+  --color-warning-bg: #FAEEDA;
+  --color-warning-border: #EF9F27;
+
+  /* ── Semantic: danger / critical ── */
+  --color-danger: #A32D2D;
+  --color-danger-bg: #FCEBEB;
+  --color-danger-border: #E24B4A;
+
+  /* ── Semantic: info / agent (teal family — never blue) ── */
+  --color-info: #0F6E56;
+  --color-info-bg: #E6F7F1;
+  --color-info-border: #2DD4A7;
+
+  /* ── Shift type bars ── */
+  --color-shift-morning: #F5A623;
+  --color-shift-afternoon: #EC4899;
+  --color-shift-night: #14B8A6;
+
+  /* ── Neutral ── */
+  --color-foreground: #1A1A1A;
+  --color-foreground-muted: #5F5E5A;
+  --color-foreground-subtle: #8E8D88;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F4F6F6;
+  --color-line: #E3E6E6;
+
+  /* ── Spacing (adds p-18 / m-18 / w-18 etc for the 18px step) ── */
+  --spacing-18: 1.125rem;
+
+  /* ── Border radius ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ── Typography: font sizes ── */
+  --text-label: 0.6875rem;   /* 11px */
+  --text-small: 0.75rem;     /* 12px */
+  --text-body: 0.8125rem;    /* 13px */
+  --text-body-lg: 0.875rem;  /* 14px */
+  --text-title: 0.9375rem;   /* 15px */
+  --text-title-lg: 1.0625rem; /* 17px */
+  --text-heading: 1.25rem;   /* 20px */
+
+  /* ── Typography: font weights ── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+}
