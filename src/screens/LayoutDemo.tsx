@@ -638,7 +638,9 @@ export default function LayoutDemo({ onNavigate }: LayoutDemoProps) {
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
             <span className="text-small text-foreground-muted truncate">Baja médica: Laura García</span>
           </nav>
-          <HelpButton className="hidden md:inline-flex ml-auto" />
+          <div className="hidden md:block ml-auto">
+            <HelpButton />
+          </div>
         </div>
 
         {/* Scrollable content */}
