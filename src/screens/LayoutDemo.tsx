@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {
   CalendarDays, Briefcase, Search, BookOpen, UsersRound,
   Settings, LogOut, ChevronRight, Menu, CircleHelp, X,
-  Moon, Clock, Stethoscope, ShieldAlert, OctagonAlert, OctagonMinus, Plus, User, Sparkles,
+  Moon, Clock, Stethoscope, ShieldAlert, ShieldUser, OctagonAlert, Minus, Plus, User, Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { WeeklyPlanPanel } from '../components/domain'
@@ -243,9 +243,11 @@ function MobileMenu({
 // Pill with user-round icon — danger / success / warning / neutral-gray
 function StatPill({
   tone,
+  icon: Icon = User,
   children,
 }: {
   tone: 'danger' | 'success' | 'warning' | 'neutral'
+  icon?: LucideIcon
   children: React.ReactNode
 }) {
   const cls = {
@@ -256,7 +258,7 @@ function StatPill({
   }[tone]
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-small font-medium whitespace-nowrap ${cls}`}>
-      <User size={12} strokeWidth={2} aria-hidden="true" />
+      <Icon size={12} strokeWidth={2} aria-hidden="true" className={tone === 'neutral' ? '[stroke-dasharray:2.5_1.5]' : undefined} />
       {children}
     </span>
   )
@@ -298,6 +300,8 @@ function Avatar({
 }) {
   const dim    = size === 'md' ? 'w-12 h-12' : 'w-10 h-10'
   const tSize  = size === 'md' ? 'text-body-lg' : 'text-small'
+  const badgeDim = size === 'md' ? 'w-[22px] h-[22px]' : 'w-[18px] h-[18px]'
+  const badgeIcon = size === 'md' ? 10 : 8
   const bgCls  = variant === 'mint'
     ? 'bg-mint-soft text-info'
     : 'bg-surface-alt text-foreground-muted'
@@ -315,13 +319,13 @@ function Avatar({
         )}
       </div>
       {badge === 'out' && (
-        <div className="absolute -bottom-0.5 -right-0.5 w-[22px] h-[22px] rounded-full bg-warning-border border-2 border-surface flex items-center justify-center" aria-hidden="true">
-          <OctagonMinus size={10} strokeWidth={2.5} className="text-white" />
+        <div className={`absolute -bottom-0.5 -right-0.5 ${badgeDim} rounded-full bg-foreground-subtle border-2 border-surface flex items-center justify-center`} aria-hidden="true">
+          <Minus size={badgeIcon + 1} strokeWidth={3} className="text-white" />
         </div>
       )}
       {badge === 'in' && (
-        <div className="absolute -bottom-0.5 -right-0.5 w-[22px] h-[22px] rounded-full bg-mint border-2 border-surface flex items-center justify-center" aria-hidden="true">
-          <Plus size={10} strokeWidth={2.5} className="text-white" />
+        <div className={`absolute -bottom-0.5 -right-0.5 ${badgeDim} rounded-full bg-mint border-2 border-surface flex items-center justify-center`} aria-hidden="true">
+          <Plus size={badgeIcon} strokeWidth={2.5} className="text-white" />
         </div>
       )}
     </div>
@@ -366,7 +370,7 @@ function ShiftCard({
       </div>
       <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
         <StatPill tone={staffingTone}>{staffingLabel}</StatPill>
-        <StatPill tone={reserveTone}>{reserveLabel}</StatPill>
+        <StatPill tone={reserveTone} icon={ShieldUser}>{reserveLabel}</StatPill>
       </div>
     </div>
   )
