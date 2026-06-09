@@ -135,6 +135,24 @@ function Sidebar() {
   )
 }
 
+function HelpButton({ className = '' }: { className?: string }) {
+  return (
+    <button
+      type="button"
+      aria-label="Ayuda"
+      onClick={() => console.log('ayuda')}
+      className={[
+        'inline-flex items-center justify-center w-10 h-10 rounded-xl',
+        'text-foreground-muted hover:text-foreground hover:bg-surface-alt transition-colors cursor-pointer',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1',
+        className,
+      ].join(' ')}
+    >
+      <CircleHelp size={22} strokeWidth={2} aria-hidden="true" />
+    </button>
+  )
+}
+
 function MobileTopBar({
   isMenuOpen,
   onOpenMenu,
@@ -157,14 +175,7 @@ function MobileTopBar({
 
         <LivoLogo className="absolute left-1/2 h-6 w-auto -translate-x-1/2" />
 
-        <button
-          type="button"
-          aria-label="Ayuda"
-          onClick={() => console.log('ayuda')}
-          className="inline-flex items-center justify-center w-10 h-10 rounded-xl text-foreground-muted hover:text-foreground hover:bg-surface-alt transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
-        >
-          <CircleHelp size={22} strokeWidth={2} aria-hidden="true" />
-        </button>
+        <HelpButton />
       </div>
     </header>
   )
@@ -447,7 +458,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
             Mejor solución encontrada
           </p>
           <p className="text-small text-foreground-muted mt-0.5">
-            Cubre el turno pero perdemos reserva en plan semanal
+            Cubre el turno, pero consume la reserva del plan semanal.
           </p>
         </div>
       </div>
@@ -550,7 +561,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-title-lg font-medium text-foreground leading-tight">Ana Torres</span>
-              <CostChip icon={Clock}>Añade horas extra</CostChip>
+              <CostChip icon={Clock}>Con coste</CostChip>
             </div>
             <p className="text-small text-foreground-muted mt-0.5">Enfermera UCI · +4h esta semana</p>
           </div>
@@ -587,7 +598,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
               <span className="text-title-lg font-medium text-foreground leading-tight">
                 María López + Sergio Martínez
               </span>
-              <CostChip icon={ShieldAlert}>Plan semanal frágil</CostChip>
+              <CostChip icon={ShieldAlert}>Deja frágil</CostChip>
             </div>
             <p className="text-small text-foreground-muted mt-0.5">Turno dividido</p>
           </div>
@@ -621,12 +632,13 @@ export default function LayoutDemo({ onNavigate }: LayoutDemoProps) {
         />
 
         {/* Breadcrumb */}
-        <div className="flex-shrink-0 bg-surface border-b border-line px-4 py-3 md:px-6">
-          <nav aria-label="Ruta de navegación" className="flex items-center gap-1">
+        <div className="flex-shrink-0 bg-surface border-b border-line px-4 py-2 md:px-6 md:flex md:items-center md:justify-between md:gap-4">
+          <nav aria-label="Ruta de navegación" className="flex min-w-0 items-center gap-1">
             <span className="text-small text-info hover:underline cursor-pointer">Incidencias</span>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
             <span className="text-small text-foreground-muted truncate">Baja médica: Laura García</span>
           </nav>
+          <HelpButton className="hidden md:inline-flex ml-auto" />
         </div>
 
         {/* Scrollable content */}
