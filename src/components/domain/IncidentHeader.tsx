@@ -22,6 +22,7 @@ const shiftLabel: Record<ShiftType, string> = {
 const defaultIncident: Incident = {
   id: 'preview',
   nurseName: 'Laura García',
+  avatarSrc: '/avatars/laura-garcia.png',
   unit: 'UCI',
   shiftType: 'night',
   startTime: '22:00',
@@ -31,6 +32,7 @@ const defaultIncident: Incident = {
   reason: 'Baja médica',
   unitMinStaff: 4,
   currentStaff: 3,
+  reserve: 1,
 }
 
 export default function IncidentHeader({ incident = defaultIncident }: IncidentHeaderProps) {
@@ -52,18 +54,28 @@ export default function IncidentHeader({ incident = defaultIncident }: IncidentH
       </div>
 
       {/* Nurse name */}
-      <div>
-        <h1 className="text-heading font-semibold text-foreground leading-tight">
-          {incident.nurseName}
-        </h1>
-        {/* Unit + shift time */}
-        <div className="flex items-center gap-1.5 mt-1 text-body text-foreground-muted">
-          <ShiftIcon size={14} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
-          <span>{incident.unit}</span>
-          <span className="text-foreground-subtle">·</span>
-          <span>{shiftLabel[incident.shiftType]}</span>
-          <span className="text-foreground-subtle">·</span>
-          <span className="font-medium text-foreground">{incident.startTime}–{incident.endTime}</span>
+      <div className="flex items-start gap-3">
+        {incident.avatarSrc && (
+          <img
+            src={incident.avatarSrc}
+            alt=""
+            className="w-11 h-11 rounded-full object-cover flex-shrink-0"
+            aria-hidden="true"
+          />
+        )}
+        <div className="min-w-0">
+          <h1 className="text-heading font-semibold text-foreground leading-tight">
+            {incident.nurseName}
+          </h1>
+          {/* Unit + shift time */}
+          <div className="flex items-center gap-1.5 mt-1 text-body text-foreground-muted">
+            <ShiftIcon size={14} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
+            <span>{incident.unit}</span>
+            <span className="text-foreground-subtle">·</span>
+            <span>{shiftLabel[incident.shiftType]}</span>
+            <span className="text-foreground-subtle">·</span>
+            <span className="font-medium text-foreground">{incident.startTime}–{incident.endTime}</span>
+          </div>
         </div>
       </div>
 

@@ -16,7 +16,7 @@ const agentChoice = mockOptions.find((o) => o.isAgentChoice)!
 
 // ── Nurse initials avatar ────────────────────────────────────────────────────
 
-function NurseAvatar({ name }: { name: string }) {
+function NurseAvatar({ name, imageSrc }: { name: string; imageSrc?: string }) {
   const initials = name
     .split(' ')
     .slice(0, 2)
@@ -26,10 +26,14 @@ function NurseAvatar({ name }: { name: string }) {
 
   return (
     <div
-      className="w-9 h-9 rounded-full bg-brand-teal flex items-center justify-center flex-shrink-0"
+      className="w-9 h-9 rounded-full bg-brand-teal flex items-center justify-center flex-shrink-0 overflow-hidden"
       aria-hidden="true"
     >
-      <span className="text-small font-semibold text-white">{initials}</span>
+      {imageSrc ? (
+        <img src={imageSrc} alt="" className="w-full h-full object-cover" />
+      ) : (
+        <span className="text-small font-semibold text-white">{initials}</span>
+      )}
     </div>
   )
 }
@@ -112,7 +116,7 @@ export default function Moment3({ onNavigate }: Moment3Props) {
     >
       {/* 1 ── Compact nurse assignment row */}
       <div className="flex items-center gap-3 px-3 py-3 bg-surface-alt border border-line rounded-lg">
-        <NurseAvatar name={agentChoice.nurseName} />
+        <NurseAvatar name={agentChoice.nurseName} imageSrc={agentChoice.avatarSrc} />
         <div className="min-w-0">
           <p className="text-body font-semibold text-foreground leading-tight">
             {agentChoice.nurseName}

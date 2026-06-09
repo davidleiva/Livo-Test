@@ -10,7 +10,7 @@
 
 @theme {
   /* ── Brand ── */
-  --color-brand-teal: #0E3A3A;
+  --color-brand-teal: #104455;
   --color-brand-teal-hover: #11504A;
   --color-mint: #2DD4A7;
   --color-mint-soft: #E6F7F1;
@@ -23,6 +23,7 @@
   /* ── Semantic: warning / fragile / cost ── */
   --color-warning: #854F0B;
   --color-warning-bg: #FAEEDA;
+  --color-warning-soft: #FEF8EE;
   --color-warning-border: #EF9F27;
 
   /* ── Semantic: danger / critical ── */
@@ -39,6 +40,9 @@
   --color-shift-morning: #F5A623;
   --color-shift-afternoon: #EC4899;
   --color-shift-night: #14B8A6;
+
+  /* ── Card / frame border (teal-tinted, used on structural containers) ── */
+  --color-card-border: #a3c4ce;
 
   /* ── Neutral ── */
   --color-foreground: #1A1A1A;

@@ -23,6 +23,7 @@ const statusLabel: Record<OptionStatus, string> = {
 const defaultOption: CoverageOption = {
   id: 'preview',
   nurseName: 'Carmen Ruiz',
+  avatarSrc: '/avatars/carmen-ruiz.png',
   specialty: 'UCI',
   status: 'recommended',
   coverage: 'full',
@@ -35,6 +36,37 @@ const defaultOption: CoverageOption = {
   ],
 }
 
+function OptionAvatar({ option }: { option: CoverageOption }) {
+  if (option.avatarSrcs?.length) {
+    return (
+      <div className="relative flex-shrink-0 w-12 h-9" aria-hidden="true">
+        {option.avatarSrcs.slice(0, 2).map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className={[
+              'absolute top-0 w-9 h-9 rounded-full object-cover border-2 border-surface',
+              index === 0 ? 'left-0 z-10' : 'left-4 z-0',
+            ].join(' ')}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (!option.avatarSrc) return null
+
+  return (
+    <img
+      src={option.avatarSrc}
+      alt=""
+      className="w-9 h-9 rounded-full object-cover flex-shrink-0"
+      aria-hidden="true"
+    />
+  )
+}
+
 export default function OptionCard({ option = defaultOption, onSelect }: OptionCardProps) {
   return (
     <Card
@@ -45,23 +77,26 @@ export default function OptionCard({ option = defaultOption, onSelect }: OptionC
     >
       {/* Header: nurse name + status badge */}
       <div className="flex items-start justify-between gap-2 mb-2">
-        <div className="min-w-0">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-title font-semibold text-foreground leading-tight">
-              {option.nurseName}
-            </span>
-            <span className="text-small text-foreground-subtle">{option.specialty}</span>
-          </div>
-
-          {/* Agent-choice marker */}
-          {option.isAgentChoice && (
-            <div className="flex items-center gap-1 mt-0.5">
-              <Sparkles size={12} strokeWidth={2} className="text-mint flex-shrink-0" aria-hidden="true" />
-              <span className="text-label font-medium text-info uppercase tracking-wide">
-                Elegida por el agente
+        <div className="flex items-start gap-2.5 min-w-0">
+          <OptionAvatar option={option} />
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-title font-semibold text-foreground leading-tight">
+                {option.nurseName}
               </span>
+              <span className="text-small text-foreground-subtle">{option.specialty}</span>
             </div>
-          )}
+
+            {/* Agent-choice marker */}
+            {option.isAgentChoice && (
+              <div className="flex items-center gap-1 mt-0.5">
+                <Sparkles size={12} strokeWidth={2} className="text-mint flex-shrink-0" aria-hidden="true" />
+                <span className="text-label font-medium text-info uppercase tracking-wide">
+                  Elegida por el agente
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
         <Badge tone={statusBadgeTone[option.status]} size="sm">

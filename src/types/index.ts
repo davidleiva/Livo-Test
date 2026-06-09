@@ -11,6 +11,7 @@ export type OptionStatus = 'recommended' | 'cost' | 'fragile'
 export interface Incident {
   id: string
   nurseName: string
+  avatarSrc?: string
   unit: string
   shiftType: ShiftType
   startTime: string
@@ -20,6 +21,7 @@ export interface Incident {
   reason: string
   unitMinStaff: number
   currentStaff: number
+  reserve: number
 }
 
 export interface ConsequenceLayer {
@@ -31,6 +33,8 @@ export interface ConsequenceLayer {
 export interface CoverageOption {
   id: string
   nurseName: string
+  avatarSrc?: string
+  avatarSrcs?: string[]
   specialty: string
   status: OptionStatus
   coverage: Coverage
@@ -46,4 +50,18 @@ export interface ValidationPreview {
   whatDoesntChange: string
   resultingDebt: string
   affected: string
+}
+
+export interface WeeklyPlanDay {
+  label: string
+  reserve: number
+  isToday: boolean
+  projectedReserve?: number
+}
+
+export interface WeeklyPlan {
+  unitLabel: string
+  planStatus: 'stable' | 'fragile'
+  days: WeeklyPlanDay[]
+  footnote: string
 }
