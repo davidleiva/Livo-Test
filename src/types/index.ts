@@ -62,6 +62,7 @@ export interface WeeklyPlanDay {
 export interface WeeklyPlan {
   unitLabel: string
   planStatus: 'stable' | 'fragile'
+  planStatusLabel?: string
   days: WeeklyPlanDay[]
   footnote: string
 }

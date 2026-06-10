@@ -4,8 +4,10 @@ import Moment1 from './screens/Moment1'
 import Moment2 from './screens/Moment2'
 import Moment3 from './screens/Moment3'
 import LayoutDemo from './screens/LayoutDemo'
+import Moment2Layout from './screens/Moment2Layout'
+import Moment3Layout from './screens/Moment3Layout'
 
-type Screen = 'moment1' | 'moment2' | 'moment3' | 'layout'
+type Screen = 'moment1' | 'moment2' | 'moment3' | 'layout' | 'm2layout' | 'm3layout'
 
 // ── Navigation ───────────────────────────────────────────────────────────────
 
@@ -28,10 +30,12 @@ type Screen = 'moment1' | 'moment2' | 'moment3' | 'layout'
 // ── Presentation screen selector ─────────────────────────────────────────────
 
 const SCREENS: { key: Screen; label: string; short: string }[] = [
-  { key: 'moment1', label: '1 · Incidente', short: 'M1' },
-  { key: 'moment2', label: '2 · Comparar',  short: 'M2' },
-  { key: 'moment3', label: '3 · Validar',   short: 'M3' },
-  { key: 'layout',  label: '4 · Layout',    short: 'L'  },
+  { key: 'moment1',  label: '1 · Incidente', short: 'M1' },
+  { key: 'moment2',  label: '2 · Comparar',  short: 'M2' },
+  { key: 'moment3',  label: '3 · Validar',   short: 'M3' },
+  { key: 'layout',   label: '4 · Layout',    short: 'L'  },
+  { key: 'm2layout', label: '5 · M2',        short: '5'  },
+  { key: 'm3layout', label: '6 · M3',        short: '6'  },
 ]
 
 function ScreenSelector({
@@ -101,16 +105,43 @@ function ScreenSelector({
 // ── Root ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>('moment1')
+  const [screen, setScreen]       = useState<Screen>('moment1')
+  const [m2OptionId, setM2Option] = useState('opt-carmen')
+
+  function handleNavigateToM2(optionId: string) {
+    setM2Option(optionId)
+    setScreen('m2layout')
+  }
+
+  function handleNavigateToM3() {
+    setScreen('m3layout')
+  }
 
   return (
     <>
       {/* key forces remount → resets scroll + local state + triggers animation */}
       <div key={screen} className="animate-screen-enter">
-        {screen === 'moment1' && <Moment1    onNavigate={setScreen} />}
-        {screen === 'moment2' && <Moment2    onNavigate={setScreen} />}
-        {screen === 'moment3' && <Moment3    onNavigate={setScreen} />}
-        {screen === 'layout'  && <LayoutDemo onNavigate={setScreen} />}
+        {screen === 'moment1'  && <Moment1      onNavigate={setScreen} />}
+        {screen === 'moment2'  && <Moment2      onNavigate={setScreen} />}
+        {screen === 'moment3'  && <Moment3      onNavigate={setScreen} />}
+        {screen === 'layout'   && (
+          <LayoutDemo
+            onNavigateToM2={handleNavigateToM2}
+            onNavigateToM3={handleNavigateToM3}
+          />
+        )}
+        {screen === 'm2layout' && (
+          <Moment2Layout
+            initialOptionId={m2OptionId}
+            onBack={() => setScreen('layout')}
+            onNavigateToM3={handleNavigateToM3}
+          />
+        )}
+        {screen === 'm3layout' && (
+          <Moment3Layout
+            onGoToIncidencias={() => setScreen('moment1')}
+          />
+        )}
       </div>
 
       <ScreenSelector current={screen} onSelect={setScreen} />

@@ -28,7 +28,7 @@ function ReserveCell({ day }: { day: WeeklyPlanDay }) {
   )
 }
 
-export default function WeeklyPlanPanel({ unitLabel, planStatus, days, footnote }: WeeklyPlanPanelProps) {
+export default function WeeklyPlanPanel({ unitLabel, planStatus, planStatusLabel, days, footnote }: WeeklyPlanPanelProps) {
   return (
     <div className="border border-card-border rounded-xl bg-surface overflow-hidden">
 
@@ -40,11 +40,11 @@ export default function WeeklyPlanPanel({ unitLabel, planStatus, days, footnote 
           </p>
           {planStatus === 'fragile' ? (
             <span className="flex-shrink-0 px-2 py-0.5 rounded-full bg-warning-soft text-warning text-label font-semibold whitespace-nowrap border border-warning-border">
-              Pasa a frágil
+              {planStatusLabel ?? 'Pasa a frágil'}
             </span>
           ) : (
             <span className="flex-shrink-0 px-2 py-0.5 rounded-full bg-success-bg text-success text-label font-semibold whitespace-nowrap">
-              Estable
+              {planStatusLabel ?? 'Estable'}
             </span>
           )}
         </div>

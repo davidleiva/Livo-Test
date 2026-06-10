@@ -117,6 +117,39 @@ export const mockWeeklyPlan: WeeklyPlan = {
     'Seleccionando la opción recomendada, hoy y el jueves quedarían sin reserva. La semana pierde su colchón ante un nuevo imprevisto.',
 }
 
+export const mockWeeklyPlanAna: WeeklyPlan = {
+  unitLabel: 'UCI Noche',
+  planStatus: 'stable',
+  days: [
+    { label: 'Lun 2',  reserve: 2, isToday: false },
+    { label: 'Mar 3',  reserve: 1, isToday: false },
+    { label: 'Mié 4',  reserve: 1, isToday: true },
+    { label: 'Jue 5',  reserve: 0, isToday: false },
+    { label: 'Vie 6',  reserve: 1, isToday: false },
+    { label: 'Sáb 7',  reserve: 2, isToday: false },
+    { label: 'Dom 8',  reserve: 2, isToday: false },
+  ],
+  footnote:
+    'La reserva del plan no se ve afectada. El riesgo de Ana es el exceso de jornada, no el plan.',
+}
+
+export const mockWeeklyPlanConfirmed: WeeklyPlan = {
+  unitLabel: 'UCI Noche',
+  planStatus: 'fragile',
+  planStatusLabel: 'Frágil',
+  days: [
+    { label: 'Lun 2',  reserve: 2, isToday: false },
+    { label: 'Mar 3',  reserve: 1, isToday: false },
+    { label: 'Mié 4',  reserve: 0, isToday: true },
+    { label: 'Jue 5',  reserve: 0, isToday: false },
+    { label: 'Vie 6',  reserve: 1, isToday: false },
+    { label: 'Sáb 7',  reserve: 2, isToday: false },
+    { label: 'Dom 8',  reserve: 2, isToday: false },
+  ],
+  footnote:
+    'Hoy y el jueves están sin reserva. Cualquier nuevo imprevisto esta semana no tendrá cobertura automática.',
+}
+
 export const mockValidationPreview: ValidationPreview = {
   whatChanges:
     'Se asigna el turno a Carmen. Puede aceptarlo o rechazarlo con causa justificada.',

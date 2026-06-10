@@ -9,7 +9,8 @@ import { WeeklyPlanPanel } from '../components/domain'
 import { mockIncident, mockOptions, mockWeeklyPlan } from '../data'
 
 export interface LayoutDemoProps {
-  onNavigate?: (screen: 'moment2' | 'moment3') => void
+  onNavigateToM2?: (optionId: string) => void
+  onNavigateToM3?: () => void
 }
 
 // ── Sidebar (unchanged) ───────────────────────────────────────────────────────
@@ -394,7 +395,7 @@ const agentChoice = mockOptions.find((o) => o.isAgentChoice)!
 const anaOption   = mockOptions.find((o) => o.id === 'opt-ana')!
 const splitOption = mockOptions.find((o) => o.id === 'opt-split')!
 
-function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
+function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProps, 'onNavigateToM2' | 'onNavigateToM3'>) {
   return (
     <div className="space-y-4">
 
@@ -529,14 +530,14 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
           <div className="flex-1 flex flex-col gap-1">
             <button
               type="button"
-              onClick={() => onNavigate?.('moment3')}
+              onClick={() => onNavigateToM3?.()}
               className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px]"
             >
               Validar
             </button>
             <button
               type="button"
-              onClick={() => onNavigate?.('moment2')}
+              onClick={() => onNavigateToM2?.('opt-carmen')}
               className="w-full inline-flex items-center justify-center px-4 py-2 text-body font-medium text-brand-teal underline hover:no-underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint rounded-sm"
             >
               Ver detalles y alternativas
@@ -554,7 +555,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
         {/* Ana Torres */}
         <button
           type="button"
-          onClick={() => onNavigate?.('moment2')}
+          onClick={() => onNavigateToM2?.('opt-ana')}
           className="w-full flex items-center gap-3 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
         >
           <Avatar initials="AT" imageSrc={anaOption.avatarSrc} size="sm" badge="in" />
@@ -571,7 +572,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
         {/* Split shift: María López + Sergio Martínez */}
         <button
           type="button"
-          onClick={() => onNavigate?.('moment2')}
+          onClick={() => onNavigateToM2?.('opt-split')}
           className="w-full flex items-center gap-3 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
         >
           {/* Overlapping dual avatars */}
@@ -612,7 +613,7 @@ function IncidentContent({ onNavigate }: Pick<LayoutDemoProps, 'onNavigate'>) {
 
 // ── Screen ────────────────────────────────────────────────────────────────────
 
-export default function LayoutDemo({ onNavigate }: LayoutDemoProps) {
+export default function LayoutDemo({ onNavigateToM2, onNavigateToM3 }: LayoutDemoProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
@@ -649,7 +650,7 @@ export default function LayoutDemo({ onNavigate }: LayoutDemoProps) {
 
             {/* Left — primary decision flow */}
             <div className="min-w-0 lg:flex-[1.7]">
-              <IncidentContent onNavigate={onNavigate} />
+              <IncidentContent onNavigateToM2={onNavigateToM2} onNavigateToM3={onNavigateToM3} />
             </div>
 
             {/* Divider — only visible when stacked on mobile/tablet */}
