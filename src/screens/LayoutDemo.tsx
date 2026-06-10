@@ -367,22 +367,24 @@ function ShiftCard({
     : 'border border-success-border border-l-[6px]'
 
   return (
-    <div className={`flex items-center justify-between gap-4 px-4 py-3 rounded-2xl bg-surface ${borderCls}`}>
-      <div className="min-w-0">
-        <p className="text-body font-semibold text-foreground leading-tight">{title}</p>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="flex items-center gap-1 text-small text-foreground-muted">
-            <Moon size={13} strokeWidth={2} aria-hidden="true" />
-            Turno Noche · 22:00 - 06:00
-            {faltan && (
-              <> · <span className="text-danger">{faltan}</span></>
-            )}
-          </span>
+    <div className={`px-4 py-3 rounded-2xl bg-surface ${borderCls}`}>
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div className="min-w-0">
+          <p className="text-body font-semibold text-foreground leading-tight">{title}</p>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="flex items-center gap-1 text-small text-foreground-muted">
+              <Moon size={13} strokeWidth={2} aria-hidden="true" />
+              Turno Noche · 22:00 - 06:00
+              {faltan && (
+                <> · <span className="text-danger">{faltan}</span></>
+              )}
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-        <StatPill tone={staffingTone}>{staffingLabel}</StatPill>
-        <StatPill tone={reserveTone} icon={ShieldUser}>{reserveLabel}</StatPill>
+        <div className="flex flex-wrap gap-2 md:justify-end flex-shrink-0">
+          <StatPill tone={staffingTone}>{staffingLabel}</StatPill>
+          <StatPill tone={reserveTone} icon={ShieldUser}>{reserveLabel}</StatPill>
+        </div>
       </div>
     </div>
   )
@@ -403,23 +405,30 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
       <div className="border border-card-border rounded-2xl p-5 space-y-4 bg-surface">
 
         {/* Header: avatar + name + meta */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-start gap-3 min-w-0">
-            <Avatar initials="LG" imageSrc={inc.avatarSrc} badge="out" />
-            <div className="min-w-0 pt-0.5">
+        <div className="flex items-start gap-3">
+          <Avatar initials="LG" imageSrc={inc.avatarSrc} badge="out" />
+          <div className="min-w-0 flex-1 pt-0.5">
+            <div className="flex items-start justify-between gap-4">
               <p className="text-[22px] font-medium text-foreground leading-tight">
                 Baja médica: Laura García
               </p>
-              <p className="text-small text-foreground-muted mt-1">
-                Hoy no podrá cubrir: {inc.unit} - Turno Noche
-              </p>
+              <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+                <span className="text-small text-foreground-muted whitespace-nowrap">Hoy. 17:55h</span>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-danger-bg text-danger text-small font-medium">
+                  <OctagonAlert size={14} strokeWidth={2} aria-hidden="true" />
+                  Crítica
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0 pt-0.5">
-            <span className="text-small text-foreground-muted whitespace-nowrap">Hoy. 17:55h</span>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-danger-bg text-danger text-small font-medium">
-              <OctagonAlert size={14} strokeWidth={2} aria-hidden="true" />
-              Crítica
+            <p className="text-small text-foreground-muted mt-1">
+              Hoy no podrá cubrir: {inc.unit} - Turno Noche
+            </p>
+            <div className="flex items-center gap-2 mt-2 md:hidden">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-danger-bg text-danger text-small font-medium">
+                <OctagonAlert size={14} strokeWidth={2} aria-hidden="true" />
+                Crítica
+              </div>
+              <span className="text-small text-foreground-muted whitespace-nowrap">Hoy. 17:55h</span>
             </div>
           </div>
         </div>
@@ -485,12 +494,18 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
               <span className="text-[22px] font-medium text-foreground leading-tight">
                 {agentChoice.nurseName}
               </span>
-              <TraitChip icon={Clock}>No añade horas extra</TraitChip>
-              <TraitChip icon={Stethoscope}>Tiene la especialidad</TraitChip>
+              <div className="hidden md:flex gap-2 flex-wrap">
+                <TraitChip icon={Clock}>No añade horas extra</TraitChip>
+                <TraitChip icon={Stethoscope}>Tiene la especialidad</TraitChip>
+              </div>
             </div>
             <p className="text-small text-foreground-muted mt-1">
               Enfermera {inc.unit} · Era la reserva
             </p>
+            <div className="flex gap-2 flex-wrap mt-2 md:hidden">
+              <TraitChip icon={Clock}>No añade horas extra</TraitChip>
+              <TraitChip icon={Stethoscope}>Tiene la especialidad</TraitChip>
+            </div>
           </div>
         </div>
 

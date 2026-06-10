@@ -231,17 +231,19 @@ function ShiftCard({
     ? 'border border-danger-border border-l-[6px]'
     : 'border border-success-border border-l-[6px]'
   return (
-    <div className={`flex items-center justify-between gap-4 px-4 py-3 rounded-2xl bg-surface ${borderCls}`}>
-      <div className="min-w-0">
-        <p className="text-body font-semibold text-foreground leading-tight">{title}</p>
-        <span className="flex items-center gap-1 text-small text-foreground-muted mt-1">
-          <Moon size={13} strokeWidth={2} aria-hidden="true" />
-          Turno Noche · 22:00 - 06:00
-        </span>
-      </div>
-      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-        <StatPill tone={staffingTone}>{staffingLabel}</StatPill>
-        <StatPill tone={reserveTone} icon={ShieldUser}>{reserveLabel}</StatPill>
+    <div className={`px-4 py-3 rounded-2xl bg-surface ${borderCls}`}>
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div className="min-w-0">
+          <p className="text-body font-semibold text-foreground leading-tight">{title}</p>
+          <span className="flex items-center gap-1 text-small text-foreground-muted mt-1">
+            <Moon size={13} strokeWidth={2} aria-hidden="true" />
+            Turno Noche · 22:00 - 06:00
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2 md:justify-end flex-shrink-0">
+          <StatPill tone={staffingTone}>{staffingLabel}</StatPill>
+          <StatPill tone={reserveTone} icon={ShieldUser}>{reserveLabel}</StatPill>
+        </div>
       </div>
     </div>
   )
@@ -425,8 +427,8 @@ function IncidentContextStrip() {
         </div>
 
         <div className="flex flex-wrap gap-2 md:justify-end">
-          <StatPill tone="neutral" icon={ShieldUser}>Reserva: {inc.reserve}</StatPill>
           <StatPill tone="danger" icon={User}>Personal: {inc.currentStaff}/{inc.unitMinStaff}</StatPill>
+          <StatPill tone="neutral" icon={ShieldUser}>Reserva: {inc.reserve}</StatPill>
         </div>
       </div>
     </div>

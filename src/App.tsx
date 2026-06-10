@@ -24,9 +24,9 @@ type Screen = 'layout' | 'm2layout' | 'm3layout'
 // ── Presentation screen selector ─────────────────────────────────────────────
 
 const SCREENS: { key: Screen; label: string; short: string }[] = [
-  { key: 'layout',   label: '4 · Layout',    short: 'L'  },
-  { key: 'm2layout', label: '5 · M2',        short: '5'  },
-  { key: 'm3layout', label: '6 · M3',        short: '6'  },
+  { key: 'layout',   label: '1 · Incidencia',   short: '1' },
+  { key: 'm2layout', label: '2 · Detalles',     short: '2' },
+  { key: 'm3layout', label: '3 · Confirmación', short: '3' },
 ]
 
 function ScreenSelector({
