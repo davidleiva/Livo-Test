@@ -78,8 +78,19 @@ export default function WeeklyPlanPanel({ unitLabel, planStatus, planStatusLabel
       </div>
 
       {/* Footnote */}
-      <div className="border-t border-line px-4 py-3">
+      <div className="border-t border-line px-4 pt-3 pb-2">
         <p className="text-small text-foreground-muted leading-snug">{footnote}</p>
+      </div>
+
+      {/* Navigation stub */}
+      <div className="px-3 pb-3">
+        <button
+          type="button"
+          onClick={() => console.log('ver plan semanal')}
+          className="w-full inline-flex items-center justify-center px-4 py-2 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+        >
+          Ver plan semanal
+        </button>
       </div>
 
     </div>

@@ -6,9 +6,9 @@ import {
   Check, AlertTriangle,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { PersonAvatar, WeeklyPlanPanel } from '../components/domain'
+import { PersonAvatar, WeeklyPlanPanel, MonthlyPlanPanel } from '../components/domain'
 import ConsequenceLayer from '../components/domain/ConsequenceLayer'
-import { mockIncident, mockOptions, mockWeeklyPlan, mockWeeklyPlanAna } from '../data'
+import { mockIncident, mockOptions, mockWeeklyPlan, mockWeeklyPlanAna, mockMonthlyPlan } from '../data'
 import type { WeeklyPlan } from '../types'
 
 export interface Moment2LayoutProps {
@@ -727,9 +727,10 @@ export default function Moment2Layout({ initialOptionId = 'opt-carmen', onBack, 
               {/* Mobile divider */}
               <div className="mt-4 border-t border-dashed border-line lg:hidden" />
 
-              {/* Weekly plan — sticky on desktop, stacked on mobile */}
-              <div className="mt-4 lg:mt-0 lg:w-72 lg:flex-shrink-0 lg:sticky lg:top-0">
+              {/* Weekly + monthly plan — sticky on desktop, stacked on mobile */}
+              <div className="mt-4 lg:mt-0 lg:w-[360px] lg:flex-shrink-0 lg:sticky lg:top-0 space-y-4">
                 <WeeklyPlanPanel {...selected.weeklyPlan} />
+                <MonthlyPlanPanel {...mockMonthlyPlan} />
               </div>
 
             </div>

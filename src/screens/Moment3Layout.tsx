@@ -6,8 +6,8 @@ import {
   CheckCircle, Clock, RotateCcw, Bell,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { WeeklyPlanPanel } from '../components/domain'
-import { mockIncident, mockOptions, mockWeeklyPlanConfirmed } from '../data'
+import { WeeklyPlanPanel, MonthlyPlanPanel } from '../components/domain'
+import { mockIncident, mockOptions, mockWeeklyPlanConfirmed, mockMonthlyPlan } from '../data'
 
 export interface Moment3LayoutProps {
   onGoToIncidencias?: () => void
@@ -452,9 +452,10 @@ export default function Moment3Layout({ onGoToIncidencias }: Moment3LayoutProps)
             {/* Divider — stacked on mobile/tablet */}
             <div className="mt-4 border-t border-dashed border-line lg:hidden" />
 
-            {/* Right — weekly plan (confirmed, real state) */}
-            <div className="mt-4 lg:mt-0 lg:flex-1 lg:sticky lg:top-0">
+            {/* Right — weekly + monthly plan (confirmed state) */}
+            <div className="mt-4 lg:mt-0 lg:flex-1 lg:sticky lg:top-0 space-y-4">
               <WeeklyPlanPanel {...mockWeeklyPlanConfirmed} />
+              <MonthlyPlanPanel {...mockMonthlyPlan} />
             </div>
 
           </div>

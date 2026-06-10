@@ -66,3 +66,20 @@ export interface WeeklyPlan {
   days: WeeklyPlanDay[]
   footnote: string
 }
+
+export interface MonthlyPlanDay {
+  day: number
+  state: 'margin' | 'no-reserve' | 'today-no-reserve'
+}
+
+export interface MonthlyPlan {
+  monthLabel: string
+  /** Overall monthly impact level → header pill */
+  status: 'low' | 'medium' | 'high'
+  /** Which weekday the 1st falls on, Monday-start (0 = Mon … 6 = Sun) */
+  firstWeekday: number
+  daysInMonth: number
+  /** Only days with a non-default state need to be listed; rest default to 'margin' */
+  days: MonthlyPlanDay[]
+  footnote: string
+}

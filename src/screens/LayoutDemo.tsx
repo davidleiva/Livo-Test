@@ -5,8 +5,8 @@ import {
   Moon, Clock, Stethoscope, ShieldAlert, ShieldUser, OctagonAlert, Minus, Plus, User, Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { PersonAvatar, WeeklyPlanPanel } from '../components/domain'
-import { mockIncident, mockOptions, mockWeeklyPlan } from '../data'
+import { PersonAvatar, WeeklyPlanPanel, MonthlyPlanPanel } from '../components/domain'
+import { mockIncident, mockOptions, mockWeeklyPlan, mockMonthlyPlan } from '../data'
 
 export interface LayoutDemoProps {
   onNavigateToM2?: (optionId: string) => void
@@ -670,10 +670,11 @@ export default function LayoutDemo({ onNavigateToM2, onNavigateToM3 }: LayoutDem
             {/* Divider — only visible when stacked on mobile/tablet */}
             <div className="mt-4 border-t border-dashed border-line lg:hidden" />
 
-            {/* Right — weekly plan context */}
+            {/* Right — weekly + monthly plan context */}
             {/* Mobile: stacks below; Desktop: sticky while left column scrolls */}
-            <div className="mt-4 lg:mt-0 lg:flex-1 lg:sticky lg:top-0">
+            <div className="mt-4 lg:mt-0 lg:flex-1 lg:sticky lg:top-0 space-y-4">
               <WeeklyPlanPanel {...mockWeeklyPlan} />
+              <MonthlyPlanPanel {...mockMonthlyPlan} />
             </div>
 
           </div>

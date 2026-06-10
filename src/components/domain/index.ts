@@ -24,3 +24,6 @@ export type { ScreenShellProps } from './ScreenShell'
 
 export { default as WeeklyPlanPanel } from './WeeklyPlanPanel'
 export type { WeeklyPlanPanelProps } from './WeeklyPlanPanel'
+
+export { default as MonthlyPlanPanel } from './MonthlyPlanPanel'
+export type { MonthlyPlanPanelProps } from './MonthlyPlanPanel'

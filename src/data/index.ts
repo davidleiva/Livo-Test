@@ -1,4 +1,4 @@
-import type { Incident, CoverageOption, ValidationPreview, WeeklyPlan } from '../types'
+import type { Incident, CoverageOption, ValidationPreview, WeeklyPlan, MonthlyPlan } from '../types'
 
 export const mockIncident: Incident = {
   id: 'inc-001',
@@ -148,6 +148,20 @@ export const mockWeeklyPlanConfirmed: WeeklyPlan = {
   ],
   footnote:
     'Hoy y el jueves están sin reserva. Cualquier nuevo imprevisto esta semana no tendrá cobertura automática.',
+}
+
+// June 2026: day 1 falls on Sunday → firstWeekday=6 (Mon-start grid).
+// Today = Wed 4 (today-no-reserve), Thu 5 (no-reserve). All other days have margin.
+export const mockMonthlyPlan: MonthlyPlan = {
+  monthLabel: 'Junio',
+  status: 'low',
+  firstWeekday: 6,
+  daysInMonth: 30,
+  days: [
+    { day: 4, state: 'today-no-reserve' },
+    { day: 5, state: 'no-reserve' },
+  ],
+  footnote: 'Junio conserva margen casi todo el mes. La tensión se concentra en esta semana — impacto mensual bajo.',
 }
 
 export const mockValidationPreview: ValidationPreview = {
