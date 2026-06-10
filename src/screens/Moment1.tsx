@@ -50,7 +50,7 @@ function OptionRow({
                 alt=""
                 className={[
                   'absolute top-0 w-8 h-8 rounded-full object-cover border-2 border-surface',
-                  index === 0 ? 'left-0 z-10' : 'left-3.5 z-0',
+                  index === 0 ? 'left-0 z-0' : 'left-3.5 z-10',
                 ].join(' ')}
               />
             ))}
@@ -218,7 +218,7 @@ export function Moment1Body({ onNavigate }: Moment1Props) {
       {/* 4 ── Other viable options */}
       <div className="space-y-2">
         <p className="text-label font-semibold uppercase tracking-wide text-foreground-subtle px-0.5">
-          Otras opciones viables
+          Otras soluciones viables
         </p>
         <OptionRow
           title="Ana Torres"

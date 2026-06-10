@@ -244,22 +244,30 @@ function ShiftCard({
 }
 
 function Avatar({
-  initials, imageSrc, variant = 'neutral',
+  initials, imageSrc, variant = 'neutral', state,
 }: {
   initials: string
   imageSrc?: string
   variant?: 'neutral' | 'mint'
+  state?: 'pending'
 }) {
-  const bgCls = variant === 'mint' ? 'bg-mint-soft text-info' : 'bg-surface-alt text-foreground-muted'
+  const bgCls = variant === 'mint' ? 'bg-mint-soft text-success' : 'bg-surface-alt text-foreground-muted'
+  const borderCls = state === 'pending'
+    ? 'border-warning-border/70 ring-2 ring-warning-soft'
+    : 'border-brand-teal/30'
   return (
     <div className="relative flex-shrink-0">
-      <div className={`w-12 h-12 rounded-full flex items-center justify-center select-none overflow-hidden border-2 border-brand-teal/30 ${bgCls}`} aria-hidden="true">
+      <div className={`w-12 h-12 rounded-full flex items-center justify-center select-none overflow-hidden border-2 ${borderCls} ${bgCls}`} aria-hidden="true">
         {imageSrc
           ? <img src={imageSrc} alt="" className="w-full h-full object-cover" />
           : <span className="text-body-lg font-semibold">{initials}</span>
         }
       </div>
-      {/* "Notificada" uses a separate badge inline in the name row */}
+      {state === 'pending' && (
+        <div className="absolute -bottom-0.5 -right-0.5 w-[22px] h-[22px] rounded-full bg-warning-soft border-2 border-surface flex items-center justify-center" aria-hidden="true">
+          <Clock size={10} strokeWidth={2.5} className="text-warning" />
+        </div>
+      )}
     </div>
   )
 }
@@ -277,22 +285,22 @@ function ConfirmationContent({ onGoToIncidencias }: { onGoToIncidencias?: () => 
 
       {/* 1 ── Status header */}
       <div className="space-y-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <CheckCircle size={28} strokeWidth={1.75} className="text-mint flex-shrink-0" aria-hidden="true" />
-          <h1 className="text-heading font-semibold text-foreground leading-tight">Asignación validada</h1>
-        </div>
-        <div>
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-small font-medium bg-mint-soft text-brand-teal border border-mint">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-teal flex-shrink-0" aria-hidden="true" />
-            Pendiente de respuesta
-          </span>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-heading font-semibold text-foreground leading-tight">Asignación validada</h1>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-small font-medium bg-warning-soft text-warning border border-warning-border">
+                <Clock size={13} strokeWidth={2.25} aria-hidden="true" />
+                Pendiente de respuesta
+              </span>
+            </div>
+            <p className="text-body text-foreground-muted leading-relaxed mt-1">
+              Carmen Ruiz ha sido notificada. La asignación es efectiva salvo rechazo justificado.
+            </p>
+          </div>
         </div>
       </div>
-
-      {/* 2 ── Regulatory subtitle */}
-      <p className="text-body text-foreground-muted leading-relaxed">
-        Carmen Ruiz ha sido notificada. La asignación es efectiva salvo rechazo justificado.
-      </p>
 
       <div className="border-t border-dashed border-line" />
 
@@ -308,13 +316,13 @@ function ConfirmationContent({ onGoToIncidencias }: { onGoToIncidencias?: () => 
 
       {/* 4 ── Confirmed person */}
       <div className="flex items-center gap-3">
-        <Avatar initials="CR" imageSrc={carmenData.avatarSrc} variant="mint" />
+        <Avatar initials="CR" imageSrc={carmenData.avatarSrc} variant="mint" state="pending" />
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-title font-semibold text-foreground leading-tight">
               {carmenData.nurseName}
             </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label font-semibold bg-mint-soft text-brand-teal border border-mint whitespace-nowrap">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label font-semibold bg-success-bg text-success border border-success-border whitespace-nowrap">
               <Bell size={10} strokeWidth={2} aria-hidden="true" />
               Notificada
             </span>
@@ -331,22 +339,30 @@ function ConfirmationContent({ onGoToIncidencias }: { onGoToIncidencias?: () => 
       <div className="space-y-3">
         <p className="text-body-lg font-medium text-foreground">¿Qué pasa ahora?</p>
         <div className="space-y-3">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-surface-alt flex items-center justify-center mt-0.5" aria-hidden="true">
+          <div className="flex items-start gap-2">
+            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-surface-alt flex items-center justify-center -mt-px" aria-hidden="true">
               <Clock size={14} strokeWidth={2} className="text-foreground-muted" />
             </div>
-            <p className="text-body text-foreground-muted leading-snug pt-0.5">
+            <p className="text-body text-foreground-muted leading-snug">
               Carmen tiene hasta las{' '}
               <span className="font-medium text-foreground">20:00h</span>{' '}
               para aceptar o rechazar con causa justificada.
             </p>
           </div>
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-surface-alt flex items-center justify-center mt-0.5" aria-hidden="true">
+          <div className="flex items-start gap-2">
+            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-surface-alt flex items-center justify-center -mt-px" aria-hidden="true">
               <RotateCcw size={14} strokeWidth={2} className="text-foreground-muted" />
             </div>
-            <p className="text-body text-foreground-muted leading-snug pt-0.5">
+            <p className="text-body text-foreground-muted leading-snug">
               Si rechaza, la incidencia vuelve a estado abierto y el sistema buscará alternativas.
+            </p>
+          </div>
+          <div className="flex items-start gap-2 rounded-xl border border-line bg-surface-alt px-3 py-2.5">
+            <CircleHelp size={14} strokeWidth={2} className="text-foreground-subtle flex-shrink-0 mt-0.5" aria-hidden="true" />
+            <p className="text-small text-foreground-muted leading-relaxed">
+              <span className="font-medium text-foreground">Asignado ≠ Cerrado.</span>{' '}
+              La profesional puede rechazar con causa justificada: conciliación familiar,
+              salud mental (Art. 34.8 ET) o incapacidad médica.
             </p>
           </div>
         </div>
@@ -354,30 +370,19 @@ function ConfirmationContent({ onGoToIncidencias }: { onGoToIncidencias?: () => 
 
       <div className="border-t border-dashed border-line" />
 
-      {/* 6 ── Legal note */}
-      <div className="px-4 py-3.5 bg-surface-alt border border-line rounded-xl">
-        <p className="text-small text-foreground-muted leading-relaxed">
-          <span className="font-medium text-foreground">Asignado ≠ Cerrado.</span>{' '}
-          La profesional puede rechazar con causa justificada: conciliación familiar,
-          salud mental (Art. 34.8 ET) o incapacidad médica.
-        </p>
-      </div>
-
-      <div className="border-t border-dashed border-line" />
-
-      {/* 7 ── Actions */}
-      <div className="space-y-3 pb-2">
+      {/* 6 ── Actions */}
+      <div className="flex flex-col gap-3 pb-2 lg:flex-row lg:justify-start">
         <button
           type="button"
           onClick={onGoToIncidencias}
-          className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          className="w-full lg:w-auto lg:min-w-[220px] inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
         >
           Ir a Incidencias
         </button>
         <button
           type="button"
           onClick={() => console.log('ver plan semanal')}
-          className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[42px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          className="w-full lg:w-auto lg:min-w-[200px] inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[42px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
         >
           Ver plan semanal
         </button>
@@ -410,7 +415,7 @@ export default function Moment3Layout({ onGoToIncidencias }: Moment3LayoutProps)
         {/* Breadcrumb */}
         <div className="flex-shrink-0 bg-surface border-b border-line px-4 py-2 md:px-6 md:flex md:items-center md:justify-between md:gap-4">
           <nav aria-label="Ruta de navegación" className="flex min-w-0 items-center gap-1">
-            <span className="text-small text-info hover:underline cursor-pointer">Incidencias</span>
+            <span className="text-small text-brand-teal hover:underline cursor-pointer">Incidencias</span>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
             <span className="text-small text-foreground-muted">Baja médica: Laura García</span>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
@@ -423,7 +428,7 @@ export default function Moment3Layout({ onGoToIncidencias }: Moment3LayoutProps)
 
         {/* Scrollable content */}
         <main className="flex-1 overflow-y-auto px-4 py-4 md:px-6 md:py-6">
-          <div className="max-w-2xl lg:max-w-[1080px] lg:flex lg:gap-6 lg:items-start">
+          <div className="mx-auto max-w-2xl lg:max-w-[1080px] lg:flex lg:gap-6 lg:items-start">
 
             {/* Left — confirmation content */}
             <div className="min-w-0 lg:flex-[1.7]">

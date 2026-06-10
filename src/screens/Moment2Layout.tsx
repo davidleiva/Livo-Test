@@ -3,7 +3,7 @@ import {
   CalendarDays, Briefcase, Search, BookOpen, UsersRound,
   Settings, LogOut, ChevronRight, Menu, CircleHelp, X,
   Moon, ShieldUser, OctagonAlert, Minus, Plus, Sparkles,
-  Check, AlertTriangle, ArrowLeft,
+  Check, AlertTriangle,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { WeeklyPlanPanel } from '../components/domain'
@@ -402,6 +402,37 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
+function IncidentContextStrip() {
+  return (
+    <div className="rounded-xl border border-card-border bg-surface px-4 py-3">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="min-w-0 space-y-1.5">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-bg px-2.5 py-1 text-small font-medium text-danger">
+              <OctagonAlert size={13} strokeWidth={2} aria-hidden="true" />
+              Criticidad alta
+            </span>
+            <span className="text-body font-semibold text-foreground">
+              Baja médica: {inc.nurseName}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-small text-foreground-muted">
+            <Moon size={13} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
+            <span className="truncate">{inc.unit} · Turno Noche · {inc.startTime}–{inc.endTime}</span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 md:justify-end">
+          <StatPill tone="danger">Personal: {inc.currentStaff}/{inc.unitMinStaff}</StatPill>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-bg px-2.5 py-1 text-small font-medium text-danger whitespace-nowrap">
+            Empieza en {inc.startsInHours}h
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Option list (desktop sidebar) ─────────────────────────────────────────────
 
 function OptionListItem({
@@ -423,9 +454,12 @@ function OptionListItem({
       ].join(' ')}
     >
       {opt.avatarSrcs ? (
-        <div className="relative flex-shrink-0 w-14 h-10 mt-0.5">
-          <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
-          <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[18px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
+        <div className="relative flex-shrink-0 w-16 h-10 mt-0.5">
+          <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
+          <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[24px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
+          <div className="absolute left-[48px] top-[18px] w-[18px] h-[18px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
+            <Plus size={8} strokeWidth={2.5} className="text-white" />
+          </div>
         </div>
       ) : (
         <Avatar initials={opt.initials} imageSrc={opt.avatarSrc} size="sm" badge="in" />
@@ -443,7 +477,7 @@ function OptionListItem({
 
 // ── Detail panel ─────────────────────────────────────────────────────────────
 
-function OptionDetail({ opt, onBack, onNavigateToM3 }: { opt: OptionSpec; onBack?: () => void; onNavigateToM3?: () => void }) {
+function OptionDetail({ opt, onNavigateToM3 }: { opt: OptionSpec; onNavigateToM3?: () => void }) {
   return (
     <div className="space-y-5">
 
@@ -475,10 +509,10 @@ function OptionDetail({ opt, onBack, onNavigateToM3 }: { opt: OptionSpec; onBack
       {/* 2 ── Person */}
       <div className="flex items-start gap-3">
         {opt.avatarSrcs ? (
-          <div className="relative flex-shrink-0 w-14 h-12 mt-0.5">
-            <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
-            <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[22px] top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
-            <div className="absolute left-[50px] top-[22px] w-[22px] h-[22px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
+          <div className="relative flex-shrink-0 w-[72px] h-12 mt-0.5">
+            <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
+            <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[30px] top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
+            <div className="absolute left-[58px] top-[22px] w-[22px] h-[22px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
               <Plus size={10} strokeWidth={2.5} className="text-white" />
             </div>
           </div>
@@ -540,13 +574,15 @@ function OptionDetail({ opt, onBack, onNavigateToM3 }: { opt: OptionSpec; onBack
 
       {/* 6 ── Actions */}
       <div className="space-y-3 pb-2">
-        <button
-          type="button"
-          onClick={() => onNavigateToM3?.()}
-          className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
-        >
-          Validar {opt.name}
-        </button>
+        <div className="flex md:justify-start">
+          <button
+            type="button"
+            onClick={() => onNavigateToM3?.()}
+            className="w-full md:w-auto md:min-w-[280px] md:max-w-[360px] inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Validar {opt.name}
+          </button>
+        </div>
         {opt.id === 'opt-ana' && (
           <div className="flex items-center gap-2 px-3 py-2.5 bg-warning-soft border border-warning-border rounded-lg">
             <AlertTriangle size={14} strokeWidth={2} className="text-warning flex-shrink-0" aria-hidden="true" />
@@ -555,14 +591,6 @@ function OptionDetail({ opt, onBack, onNavigateToM3 }: { opt: OptionSpec; onBack
             </p>
           </div>
         )}
-        <button
-          type="button"
-          onClick={onBack}
-          className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[42px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
-        >
-          <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" />
-          Volver
-        </button>
       </div>
 
     </div>
@@ -595,7 +623,13 @@ export default function Moment2Layout({ initialOptionId = 'opt-carmen', onBack, 
         {/* Breadcrumb */}
         <div className="flex-shrink-0 bg-surface border-b border-line px-4 py-2 md:px-6 md:flex md:items-center md:justify-between md:gap-4">
           <nav aria-label="Ruta de navegación" className="flex min-w-0 items-center gap-1">
-            <span className="text-small text-info hover:underline cursor-pointer">Incidencias</span>
+            <button
+              type="button"
+              onClick={onBack}
+              className="text-small text-info hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint rounded-sm"
+            >
+              Incidencias
+            </button>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
             <button
               type="button"
@@ -618,7 +652,7 @@ export default function Moment2Layout({ initialOptionId = 'opt-carmen', onBack, 
           {/* Option list — desktop only */}
           <div className="hidden lg:flex flex-col w-72 xl:w-80 flex-shrink-0 border-r border-line overflow-y-auto bg-surface">
             <div className="px-4 pt-4 pb-2">
-              <p className="text-label font-semibold uppercase tracking-wide text-foreground-subtle">Opciones viables</p>
+              <p className="text-label font-semibold uppercase tracking-wide text-foreground-subtle">Soluciones viables</p>
             </div>
             {OPTIONS.map(opt => (
               <OptionListItem
@@ -630,32 +664,37 @@ export default function Moment2Layout({ initialOptionId = 'opt-carmen', onBack, 
             ))}
           </div>
 
-          {/* Option pills — mobile/tablet only */}
-          <div className="lg:hidden flex gap-2 px-4 py-3 border-b border-line overflow-x-auto flex-shrink-0 bg-surface">
-            {OPTIONS.map(opt => (
-              <button
-                key={opt.id}
-                type="button"
-                onClick={() => setSelectedId(opt.id)}
-                className={[
-                  'px-3 py-1.5 rounded-full text-small font-medium whitespace-nowrap flex-shrink-0 border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint',
-                  selectedId === opt.id
-                    ? 'bg-mint-soft text-brand-teal border-mint'
-                    : 'bg-surface text-foreground-muted border-line hover:border-foreground-subtle',
-                ].join(' ')}
-              >
-                {opt.name}
-              </button>
-            ))}
-          </div>
-
           {/* Detail scroll area */}
           <div className="flex-1 overflow-y-auto">
             <div className="px-4 py-4 md:px-6 md:py-6 lg:flex lg:gap-6 lg:items-start">
 
               {/* Detail content + actions */}
-              <div className="lg:flex-1 min-w-0">
-                <OptionDetail opt={selected} onBack={onBack} onNavigateToM3={onNavigateToM3} />
+              <div className="lg:flex-1 min-w-0 space-y-5">
+                <IncidentContextStrip />
+
+                {/* Option pills — mobile/tablet only */}
+                <div className="lg:hidden space-y-2">
+                  <SectionLabel>Soluciones viables</SectionLabel>
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {OPTIONS.map(opt => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => setSelectedId(opt.id)}
+                        className={[
+                          'px-3 py-1.5 rounded-full text-small font-medium whitespace-nowrap flex-shrink-0 border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint',
+                          selectedId === opt.id
+                            ? 'bg-brand-teal text-white border-brand-teal'
+                            : 'bg-surface text-foreground-muted border-line hover:border-foreground-subtle hover:text-foreground',
+                        ].join(' ')}
+                      >
+                        {opt.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <OptionDetail opt={selected} onNavigateToM3={onNavigateToM3} />
               </div>
 
               {/* Mobile divider */}

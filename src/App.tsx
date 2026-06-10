@@ -1,25 +1,19 @@
 import './index.css'
 import { useState } from 'react'
-import Moment1 from './screens/Moment1'
-import Moment2 from './screens/Moment2'
-import Moment3 from './screens/Moment3'
 import LayoutDemo from './screens/LayoutDemo'
 import Moment2Layout from './screens/Moment2Layout'
 import Moment3Layout from './screens/Moment3Layout'
 
-type Screen = 'moment1' | 'moment2' | 'moment3' | 'layout' | 'm2layout' | 'm3layout'
+type Screen = 'layout' | 'm2layout' | 'm3layout'
 
 // ── Navigation ───────────────────────────────────────────────────────────────
 
 /*
  * Designed flow:
- *   Moment1 "Ver por qué"   → moment2
- *   Moment1 "Validar"       → moment3
- *   Moment2 back            → moment1
- *   Moment2 "Validar Carmen"→ moment3
- *   Moment3 back            → moment2
- *   Moment3 success restart → moment1
- *   Layout embedded actions → moment2 / moment3 (breaks out of layout to full screen)
+ *   Layout embedded actions → m2layout / m3layout
+ *   M2 Layout back          → layout
+ *   M2 Layout validate      → m3layout
+ *   M3 Layout restart       → layout
  *
  * key={screen} on the wrapper forces remount on navigation:
  *   - resets Moment3's local validated state
@@ -30,9 +24,6 @@ type Screen = 'moment1' | 'moment2' | 'moment3' | 'layout' | 'm2layout' | 'm3lay
 // ── Presentation screen selector ─────────────────────────────────────────────
 
 const SCREENS: { key: Screen; label: string; short: string }[] = [
-  { key: 'moment1',  label: '1 · Incidente', short: 'M1' },
-  { key: 'moment2',  label: '2 · Comparar',  short: 'M2' },
-  { key: 'moment3',  label: '3 · Validar',   short: 'M3' },
   { key: 'layout',   label: '4 · Layout',    short: 'L'  },
   { key: 'm2layout', label: '5 · M2',        short: '5'  },
   { key: 'm3layout', label: '6 · M3',        short: '6'  },
@@ -105,7 +96,7 @@ function ScreenSelector({
 // ── Root ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [screen, setScreen]       = useState<Screen>('moment1')
+  const [screen, setScreen]       = useState<Screen>('layout')
   const [m2OptionId, setM2Option] = useState('opt-carmen')
 
   function handleNavigateToM2(optionId: string) {
@@ -121,9 +112,6 @@ export default function App() {
     <>
       {/* key forces remount → resets scroll + local state + triggers animation */}
       <div key={screen} className="animate-screen-enter">
-        {screen === 'moment1'  && <Moment1      onNavigate={setScreen} />}
-        {screen === 'moment2'  && <Moment2      onNavigate={setScreen} />}
-        {screen === 'moment3'  && <Moment3      onNavigate={setScreen} />}
         {screen === 'layout'   && (
           <LayoutDemo
             onNavigateToM2={handleNavigateToM2}
@@ -139,7 +127,7 @@ export default function App() {
         )}
         {screen === 'm3layout' && (
           <Moment3Layout
-            onGoToIncidencias={() => setScreen('moment1')}
+            onGoToIncidencias={() => setScreen('layout')}
           />
         )}
       </div>

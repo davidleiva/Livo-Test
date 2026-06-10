@@ -550,7 +550,7 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
 
       {/* 4 ── Other viable options */}
       <div className="space-y-3">
-        <p className="text-body-lg font-semibold text-foreground">Otras opciones viables</p>
+        <p className="text-body-lg font-semibold text-foreground">Otras soluciones viables</p>
 
         {/* Ana Torres */}
         <button
@@ -576,20 +576,20 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
           className="w-full flex items-center gap-3 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
         >
           {/* Overlapping dual avatars */}
-          <div className="relative flex-shrink-0 w-14 h-10">
+          <div className="relative flex-shrink-0 w-16 h-10">
             <img
               src={splitOption.avatarSrcs?.[0]}
               alt=""
-              className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10"
+              className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0"
               aria-hidden="true"
             />
             <img
               src={splitOption.avatarSrcs?.[1]}
               alt=""
-              className="absolute left-[18px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0"
+              className="absolute left-[24px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10"
               aria-hidden="true"
             />
-            <div className="absolute left-[42px] top-[18px] w-[18px] h-[18px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
+            <div className="absolute left-[48px] top-[18px] w-[18px] h-[18px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
               <Plus size={8} strokeWidth={2.5} className="text-white" />
             </div>
           </div>
@@ -646,7 +646,7 @@ export default function LayoutDemo({ onNavigateToM2, onNavigateToM3 }: LayoutDem
 
         {/* Scrollable content */}
         <main className="flex-1 overflow-y-auto px-4 py-4 md:px-6 md:py-6">
-          <div className="max-w-2xl lg:max-w-[1080px] lg:flex lg:gap-6 lg:items-start">
+          <div className="mx-auto max-w-2xl lg:max-w-[1080px] lg:flex lg:gap-6 lg:items-start">
 
             {/* Left — primary decision flow */}
             <div className="min-w-0 lg:flex-[1.7]">

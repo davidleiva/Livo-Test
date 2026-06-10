@@ -13,6 +13,7 @@ export const colors = {
   warning: {
     text: '#854F0B',
     bg: '#FAEEDA',
+    soft: '#FEF8EE',
     border: '#EF9F27',
   },
   danger: {
