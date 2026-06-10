@@ -1,6 +1,6 @@
 import { Sparkles, AlertCircle, ShieldAlert, Clock, Stethoscope, ChevronRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { Badge, Button } from '../components/ui'
+import { Badge } from '../components/ui'
 import { ShiftEntity, PersonAvatar, ScreenShell } from '../components/domain'
 import { mockIncident, mockOptions } from '../data'
 
@@ -42,19 +42,14 @@ function OptionRow({
     >
       <div className="flex items-center gap-2.5 min-w-0">
         {imageSrcs?.length ? (
-          <div className="relative flex-shrink-0 w-11 h-8" aria-hidden="true">
-            {imageSrcs.slice(0, 2).map((src, index) => (
-              <img
-                key={src}
-                src={src}
-                alt=""
-                className={[
-                  'absolute top-0 w-8 h-8 rounded-full object-cover border-2 border-surface',
-                  index === 0 ? 'left-0 z-0' : 'left-3.5 z-10',
-                ].join(' ')}
-              />
-            ))}
-          </div>
+          <PersonAvatar
+            size="sm"
+            badge="in"
+            people={[
+              { initials: 'ML', imageSrc: imageSrcs[0] },
+              { initials: 'SM', imageSrc: imageSrcs[1] },
+            ]}
+          />
         ) : imageSrc ? (
           <img
             src={imageSrc}
@@ -187,30 +182,40 @@ export function Moment1Body({ onNavigate }: Moment1Props) {
           </div>
         </div>
 
-        {/* Action zone */}
-        <div className="space-y-2">
-          <Button variant="primary" fullWidth onClick={() => onNavigate?.('moment3')}>
+        {/* Link — above the button group, left-aligned, larger tap target on mobile */}
+        <button
+          type="button"
+          onClick={() => onNavigate?.('moment2')}
+          className="block w-full text-left py-3 md:py-1.5 text-body font-medium text-info hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1 rounded-sm"
+        >
+          Ver detalles y alternativas
+        </button>
+
+        <div className="border-t border-line" />
+
+        {/* Decision button group — responsive */}
+        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-2">
+          <button
+            type="button"
+            onClick={() => onNavigate?.('moment3')}
+            className="w-full md:w-full lg:w-auto lg:flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
             Validar
-          </Button>
-
-          <div className="flex gap-2">
-            <Button variant="secondary" fullWidth onClick={() => console.log('borrador')}>
-              Borrador
-            </Button>
-            <Button variant="secondary" fullWidth onClick={() => console.log('escalar')}>
-              Escalar
-            </Button>
-          </div>
-
-          <div className="flex justify-center pt-1">
-            <button
-              type="button"
-              onClick={() => onNavigate?.('moment2')}
-              className="text-small font-medium text-info hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1 rounded-sm"
-            >
-              Ver detalles y alternativas
-            </button>
-          </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('borrador')}
+            className="w-full md:flex-1 lg:flex-none inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] border border-line text-foreground hover:bg-surface-alt transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Borrador
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="w-full md:flex-1 lg:flex-none inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] border border-line text-foreground hover:bg-surface-alt transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
         </div>
 
       </div>

@@ -1,6 +1,7 @@
 import { Sparkles } from 'lucide-react'
 import { Card, Badge } from '../ui'
 import ConsequenceLayer from './ConsequenceLayer'
+import PersonAvatar from './PersonAvatar'
 import type { CoverageOption, OptionStatus } from '../../types'
 
 export interface OptionCardProps {
@@ -39,19 +40,13 @@ const defaultOption: CoverageOption = {
 function OptionAvatar({ option }: { option: CoverageOption }) {
   if (option.avatarSrcs?.length) {
     return (
-      <div className="relative flex-shrink-0 w-12 h-9" aria-hidden="true">
-        {option.avatarSrcs.slice(0, 2).map((src, index) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            className={[
-              'absolute top-0 w-9 h-9 rounded-full object-cover border-2 border-surface',
-              index === 0 ? 'left-0 z-10' : 'left-4 z-0',
-            ].join(' ')}
-          />
-        ))}
-      </div>
+      <PersonAvatar
+        badge="in"
+        people={[
+          { imageSrc: option.avatarSrcs[0] },
+          { imageSrc: option.avatarSrcs[1] },
+        ]}
+      />
     )
   }
 

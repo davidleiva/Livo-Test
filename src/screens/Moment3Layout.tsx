@@ -415,9 +415,21 @@ export default function Moment3Layout({ onGoToIncidencias }: Moment3LayoutProps)
         {/* Breadcrumb */}
         <div className="flex-shrink-0 bg-surface border-b border-line px-4 py-2 md:px-6 md:flex md:items-center md:justify-between md:gap-4">
           <nav aria-label="Ruta de navegación" className="flex min-w-0 items-center gap-1">
-            <span className="text-small text-brand-teal hover:underline cursor-pointer">Incidencias</span>
+            <button
+              type="button"
+              onClick={onGoToIncidencias}
+              className="text-small text-brand-teal hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint rounded-sm"
+            >
+              Incidencias
+            </button>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
-            <span className="text-small text-foreground-muted">Baja médica: Laura García</span>
+            <button
+              type="button"
+              onClick={onGoToIncidencias}
+              className="text-small text-foreground-muted hover:text-brand-teal hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint rounded-sm"
+            >
+              Baja médica: Laura García
+            </button>
             <ChevronRight size={12} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
             <span className="text-small text-foreground-muted truncate">Confirmación</span>
           </nav>

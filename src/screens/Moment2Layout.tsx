@@ -2,11 +2,11 @@ import { useState } from 'react'
 import {
   CalendarDays, Briefcase, Search, BookOpen, UsersRound,
   Settings, LogOut, ChevronRight, Menu, CircleHelp, X,
-  Moon, ShieldUser, OctagonAlert, Minus, Plus, Sparkles,
+  Moon, ShieldUser, User, OctagonAlert, Minus, Plus, Sparkles,
   Check, AlertTriangle,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { WeeklyPlanPanel } from '../components/domain'
+import { PersonAvatar, WeeklyPlanPanel } from '../components/domain'
 import ConsequenceLayer from '../components/domain/ConsequenceLayer'
 import { mockIncident, mockOptions, mockWeeklyPlan, mockWeeklyPlanAna } from '../data'
 import type { WeeklyPlan } from '../types'
@@ -197,7 +197,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 // ── Design helpers ────────────────────────────────────────────────────────────
 
 function StatPill({
-  tone, icon: Icon = ShieldUser, children,
+  tone, icon: Icon = User, children,
 }: {
   tone: 'danger' | 'success' | 'warning' | 'neutral'
   icon?: LucideIcon
@@ -385,7 +385,7 @@ const OPTIONS: OptionSpec[] = [
     legal: [
       { ok: true,  text: 'Jornada individual respetada' },
       { ok: true,  text: 'Descanso mínimo respetado' },
-      { ok: false, text: 'Requiere 2 aceptaciones — si una falla, turno descubierto' },
+      { ok: false, text: 'Requiere 2 aceptaciones: si una falla, turno descubierto' },
     ],
     shiftcard: { staffingTone: 'success', reserveTone: 'warning', reserveLabel: 'Reserva: 0' },
     weeklyPlan: mockWeeklyPlan,
@@ -404,7 +404,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function IncidentContextStrip() {
   return (
-    <div className="rounded-xl border border-card-border bg-surface px-4 py-3">
+    <div className="rounded-xl border border-card-border border-l-[6px] border-l-danger-border bg-surface px-4 py-3">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="min-w-0 space-y-1.5">
           <div className="flex items-center gap-2 flex-wrap">
@@ -418,15 +418,15 @@ function IncidentContextStrip() {
           </div>
           <div className="flex items-center gap-1.5 text-small text-foreground-muted">
             <Moon size={13} strokeWidth={2} className="text-foreground-subtle flex-shrink-0" aria-hidden="true" />
-            <span className="truncate">{inc.unit} · Turno Noche · {inc.startTime}–{inc.endTime}</span>
+            <span className="truncate">
+              Turno Noche · {inc.startTime} - {inc.endTime} · <span className="text-danger">Faltan {inc.startsInHours}h</span>
+            </span>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2 md:justify-end">
-          <StatPill tone="danger">Personal: {inc.currentStaff}/{inc.unitMinStaff}</StatPill>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-bg px-2.5 py-1 text-small font-medium text-danger whitespace-nowrap">
-            Empieza en {inc.startsInHours}h
-          </span>
+          <StatPill tone="neutral" icon={ShieldUser}>Reserva: {inc.reserve}</StatPill>
+          <StatPill tone="danger" icon={User}>Personal: {inc.currentStaff}/{inc.unitMinStaff}</StatPill>
         </div>
       </div>
     </div>
@@ -449,18 +449,18 @@ function OptionListItem({
       className={[
         'w-full flex items-start gap-3 px-4 py-4 border-l-[3px] transition-colors text-left focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-mint',
         selected
-          ? 'bg-mint-soft border-brand-teal'
+          ? 'bg-surface-alt border-active-border'
           : 'bg-surface border-transparent hover:bg-surface-alt',
       ].join(' ')}
     >
       {opt.avatarSrcs ? (
-        <div className="relative flex-shrink-0 w-16 h-10 mt-0.5">
-          <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
-          <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[24px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
-          <div className="absolute left-[48px] top-[18px] w-[18px] h-[18px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
-            <Plus size={8} strokeWidth={2.5} className="text-white" />
-          </div>
-        </div>
+        <PersonAvatar
+          badge="in"
+          people={[
+            { initials: 'ML', imageSrc: opt.avatarSrcs[0] },
+            { initials: 'SM', imageSrc: opt.avatarSrcs[1] },
+          ]}
+        />
       ) : (
         <Avatar initials={opt.initials} imageSrc={opt.avatarSrc} size="sm" badge="in" />
       )}
@@ -507,15 +507,16 @@ function OptionDetail({ opt, onNavigateToM3 }: { opt: OptionSpec; onNavigateToM3
       <div className="border-t border-dashed border-line" />
 
       {/* 2 ── Person */}
-      <div className="flex items-start gap-3">
+      <div className={`flex items-start ${opt.avatarSrcs ? 'gap-5 pl-4' : 'gap-3'}`}>
         {opt.avatarSrcs ? (
-          <div className="relative flex-shrink-0 w-[72px] h-12 mt-0.5">
-            <img src={opt.avatarSrcs[0]} alt="" className="absolute left-0 top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-0" aria-hidden="true" />
-            <img src={opt.avatarSrcs[1]} alt="" className="absolute left-[30px] top-0 w-12 h-12 rounded-full object-cover border-2 border-brand-teal/30 z-10" aria-hidden="true" />
-            <div className="absolute left-[58px] top-[22px] w-[22px] h-[22px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
-              <Plus size={10} strokeWidth={2.5} className="text-white" />
-            </div>
-          </div>
+          <PersonAvatar
+            size="lg"
+            badge="in"
+            people={[
+              { initials: 'ML', imageSrc: opt.avatarSrcs[0] },
+              { initials: 'SM', imageSrc: opt.avatarSrcs[1] },
+            ]}
+          />
         ) : (
           <Avatar initials={opt.initials} imageSrc={opt.avatarSrc} variant="mint" badge="in" />
         )}
@@ -574,20 +575,44 @@ function OptionDetail({ opt, onNavigateToM3 }: { opt: OptionSpec; onNavigateToM3
 
       {/* 6 ── Actions */}
       <div className="space-y-3 pb-2">
-        <div className="flex md:justify-start">
+        <div className="space-y-3 lg:hidden">
           <button
             type="button"
             onClick={() => onNavigateToM3?.()}
-            className="w-full md:w-auto md:min-w-[280px] md:max-w-[360px] inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+            className="w-full inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
           >
             Validar {opt.name}
           </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
+        </div>
+
+        <div className="hidden lg:flex lg:items-center lg:gap-3">
+          <button
+            type="button"
+            onClick={() => onNavigateToM3?.()}
+            className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Validar {opt.name}
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
         </div>
         {opt.id === 'opt-ana' && (
-          <div className="flex items-center gap-2 px-3 py-2.5 bg-warning-soft border border-warning-border rounded-lg">
+          <div className="flex items-center gap-2 px-3 py-2.5 bg-warning-soft border border-warning-border rounded-lg lg:w-fit">
             <AlertTriangle size={14} strokeWidth={2} className="text-warning flex-shrink-0" aria-hidden="true" />
             <p className="text-small text-warning leading-snug">
-              Esta opción tiene riesgo legal — Ana puede rechazar con causa justificada.
+              Esta opción tiene riesgo legal: Ana puede rechazar con causa justificada.
             </p>
           </div>
         )}
@@ -650,7 +675,7 @@ export default function Moment2Layout({ initialOptionId = 'opt-carmen', onBack, 
         <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
 
           {/* Option list — desktop only */}
-          <div className="hidden lg:flex flex-col w-72 xl:w-80 flex-shrink-0 border-r border-line overflow-y-auto bg-surface">
+          <div className="hidden lg:flex flex-col w-72 xl:w-80 flex-shrink-0 overflow-y-auto bg-surface">
             <div className="px-4 pt-4 pb-2">
               <p className="text-label font-semibold uppercase tracking-wide text-foreground-subtle">Soluciones viables</p>
             </div>

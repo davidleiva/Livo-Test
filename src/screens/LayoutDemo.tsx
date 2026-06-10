@@ -5,7 +5,7 @@ import {
   Moon, Clock, Stethoscope, ShieldAlert, ShieldUser, OctagonAlert, Minus, Plus, User, Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { WeeklyPlanPanel } from '../components/domain'
+import { PersonAvatar, WeeklyPlanPanel } from '../components/domain'
 import { mockIncident, mockOptions, mockWeeklyPlan } from '../data'
 
 export interface LayoutDemoProps {
@@ -505,45 +505,55 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
           </div>
         </div>
 
-        {/* Action zone: [Borrador | Escalar] / [Validar / Ver detalles] */}
-        <div className="flex gap-4 items-start">
+        <div className="border-t border-dashed border-line" />
 
-          {/* Left column: Borrador + Escalar */}
-          <div className="flex flex-1 gap-3">
-            <button
-              type="button"
-              onClick={() => console.log('borrador')}
-              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px]"
-            >
-              Borrador
-            </button>
-            <button
-              type="button"
-              onClick={() => console.log('escalar')}
-              className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px]"
-            >
-              Escalar
-            </button>
-          </div>
+        {/* Decision actions */}
+        <div className="space-y-3 lg:hidden">
+          <button
+            type="button"
+            onClick={() => onNavigateToM3?.()}
+            className="w-full inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Validar
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigateToM2?.('opt-carmen')}
+            className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Ver detalles
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
+        </div>
 
-          {/* Right column: Validar then link */}
-          <div className="flex-1 flex flex-col gap-1">
-            <button
-              type="button"
-              onClick={() => onNavigateToM3?.()}
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px]"
-            >
-              Validar
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigateToM2?.('opt-carmen')}
-              className="w-full inline-flex items-center justify-center px-4 py-2 text-body font-medium text-brand-teal underline hover:no-underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint rounded-sm"
-            >
-              Ver detalles y alternativas
-            </button>
-          </div>
-
+        <div className="hidden lg:flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onNavigateToM3?.()}
+            className="flex-[2] inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-body font-medium bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Validar
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigateToM2?.('opt-carmen')}
+            className="flex-1 inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Ver detalles
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="flex-1 inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-body font-medium border border-brand-teal text-brand-teal hover:bg-surface-alt transition-colors cursor-pointer min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
         </div>
 
       </div>
@@ -556,7 +566,7 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
         <button
           type="button"
           onClick={() => onNavigateToM2?.('opt-ana')}
-          className="w-full flex items-center gap-3 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
+          className="w-full flex items-center gap-4 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
         >
           <Avatar initials="AT" imageSrc={anaOption.avatarSrc} size="sm" badge="in" />
           <div className="flex-1 min-w-0">
@@ -573,26 +583,15 @@ function IncidentContent({ onNavigateToM2, onNavigateToM3 }: Pick<LayoutDemoProp
         <button
           type="button"
           onClick={() => onNavigateToM2?.('opt-split')}
-          className="w-full flex items-center gap-3 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
+          className="w-full flex items-center gap-4 px-4 py-3 bg-surface border border-card-border rounded-2xl hover:border-foreground-subtle transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint cursor-pointer"
         >
-          {/* Overlapping dual avatars */}
-          <div className="relative flex-shrink-0 w-16 h-10">
-            <img
-              src={splitOption.avatarSrcs?.[0]}
-              alt=""
-              className="absolute left-0 top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-0"
-              aria-hidden="true"
-            />
-            <img
-              src={splitOption.avatarSrcs?.[1]}
-              alt=""
-              className="absolute left-[24px] top-0 w-10 h-10 rounded-full object-cover border-2 border-brand-teal/30 z-10"
-              aria-hidden="true"
-            />
-            <div className="absolute left-[48px] top-[18px] w-[18px] h-[18px] rounded-full bg-mint border-2 border-surface flex items-center justify-center z-20" aria-hidden="true">
-              <Plus size={8} strokeWidth={2.5} className="text-white" />
-            </div>
-          </div>
+          <PersonAvatar
+            badge="in"
+            people={[
+              { initials: 'ML', imageSrc: splitOption.avatarSrcs?.[0] },
+              { initials: 'SM', imageSrc: splitOption.avatarSrcs?.[1] },
+            ]}
+          />
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">

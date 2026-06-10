@@ -2,6 +2,7 @@ export const colors = {
   brand: {
     teal: '#104455',
     tealHover: '#11504A',
+    activeBorder: '#5EADC6',
     mint: '#2DD4A7',
     mintSoft: '#E6F7F1',
   },

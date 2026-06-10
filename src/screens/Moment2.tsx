@@ -3,7 +3,6 @@ import { Badge } from '../components/ui'
 import {
   IncidentHeader,
   OptionCard,
-  StickyActionBar,
   ScreenShell,
 } from '../components/domain'
 import { mockIncident, mockOptions } from '../data'
@@ -132,14 +131,6 @@ export default function Moment2({ onNavigate }: Moment2Props) {
       title="Por qué Carmen"
       subtitle="Razonamiento del agente"
       onBack={() => onNavigate?.('moment1')}
-      actionBar={
-        <StickyActionBar
-          primaryLabel="Validar Carmen"
-          onPrimary={() => onNavigate?.('moment3')}
-          secondaryActions={[{ label: 'Elegir otra', onClick: () => {} }]}
-          microcopy="Al validar, se asignará el turno a Carmen Ruiz y se le notificará."
-        />
-      }
     >
 
       {/* ════════════════════════════════════════════════
@@ -183,6 +174,35 @@ export default function Moment2({ onNavigate }: Moment2Props) {
           <ComparisonTable options={mockOptions} />
         </div>
 
+      </div>
+
+      {/* ════════════════════════════════════════════════
+          DECISION BUTTON GROUP — shared, all breakpoints
+          ════════════════════════════════════════════════ */}
+      <div className="mt-6 pt-4 border-t border-line space-y-3">
+        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-2">
+          <button
+            type="button"
+            onClick={() => onNavigate?.('moment3')}
+            className="w-full md:w-full lg:w-auto lg:flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] bg-brand-teal text-white hover:bg-brand-teal-hover transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Validar {agentChoice.nurseName}
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('borrador')}
+            className="w-full md:flex-1 lg:flex-none inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] border border-line text-foreground hover:bg-surface-alt transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Borrador
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log('escalar')}
+            className="w-full md:flex-1 lg:flex-none inline-flex items-center justify-center px-4 py-2.5 rounded-md text-body font-medium min-h-[44px] border border-line text-foreground hover:bg-surface-alt transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-1"
+          >
+            Escalar
+          </button>
+        </div>
       </div>
 
     </ScreenShell>
